@@ -1,83 +1,105 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import Img from 'react-image';
 // const Img = require('react-image');
 // import Logo from './posts/rsz_4.png'
 
-export default class Upload extends React.Component{
-    constructor(props){
-        super(props);
+export default function Upload (props){
+    // constructor(props){
+    //     super(props);
 
-        this.state={
-            postname:"",
-            category:this.props.AllCategories[0].category,
-            file:"",
-            date:"",
-            time:"",
-            email:"",
-            username:"",
+    //     this.state={
+    //         postname:"",
+    //         category:this.props.AllCategories[0].category,
+    //         file:"",
+    //         date:"",
+    //         time:"",
+    //         email:"",
+    //         username:"",
 
-            likes:0,
-            comments:0,
+    //         likes:0,
+    //         comments:0,
             
-            array:[]
+    //         array:[]
             
             
-        }
-        console.log("user is !!!!!!!!!",localStorage.username);
-    console.log("user is !!!!!!!!!",localStorage.email);
-    console.log("user is !!!!!!!!!",localStorage.password);
+    //     }
+    //     console.log("user is !!!!!!!!!",localStorage.username);
+    // console.log("user is !!!!!!!!!",localStorage.email);
+    // // console.log("user is !!!!!!!!!",localStorage.password);
 
-    this.setState({email:localStorage.email});
-    this.setState({username:localStorage.username});
+    // this.setState({email:localStorage.email});
+    // this.setState({username:localStorage.username});
 
-    console.log("state issssssssssssswwwwwwwwwww",this.state);
-    }
+    // console.log("state issssssssssssswwwwwwwwwww",this.state);
+    // }
 
-    handle = (event)=>{
+    const [postname,setPostname] = useState("");
+    const [category,setCategory] = useState(props.AllCategories[0].category);
+    const [file,setFile] = useState("");
+    const [date,setDate] = useState("");
+    const [time,setTime] = useState("");
+    const [email,setEmail] = useState("");
+    const [username,setUsername] = useState("");
+    const [likes,setLikes] = useState(0);
+    const [comments,setComments] = useState(0);
+
+    useEffect(()=>{
+        setEmail(localStorage.email);
+        setUsername(localStorage.username);
+
+        console.log("categories areeeee",category);
+    },[])
+
+    // handle = (event)=>{
         
 
-        //  this.setState({item:event.target.value});
+    //     //  this.setState({item:event.target.value});
 
-        console.log("value is +++++++",event.target.value);
-       // console.log("item is +++++",item);
+    //     console.log("value is +++++++",event.target.value);
+    //    // console.log("item is +++++",item);
 
       
-           var item =  this.state.array;
-           item.push(event.target.value);
+    //        var item =  this.state.array;
+    //        item.push(event.target.value);
 
-           this.setState({array:item})
+    //        this.setState({array:item})
 
             
 
-        console.log(this.state.array);
-    }
+    //     console.log(this.state.array);
+    // }
 
-    handleChange = (event) => {
-        let nam = event.target.name;
-        let val = event.target.value;
-        this.setState({ [nam]: val });
+    // handleChange = (event) => {
+    //     let nam = event.target.name;
+    //     let val = event.target.value;
+    //     this.setState({ [nam]: val });
 
-        console.log("value is $$$$$$",val);
+    //     console.log("value is $$$$$$",val);
     
-      };
+    //   };
 
-    handleChangeFile= event =>{
+    const handleChangeFile = event =>{
 
         console.log("image is ++++++++++",event.target.files[0])
 
         
 
-        this.setState({
-            file:event.target.files[0]
-        })
+        // this.setState({
+        //     file:event.target.files[0]
+        // })
+
+        setFile(event.target.files[0]);
 
         // console.log("image is ------------",this.state.file)
 
         var dat = new Date();
 
-       this.setState({date: dat.toString().slice(8,10) + " " + dat.toString().slice(4,7) + " " + dat.toString().slice(11,15) })
-       this.setState({time:dat.toString().slice(16,24)});
+    //    this.setState({date: dat.toString().slice(8,10) + " " + dat.toString().slice(4,7) + " " + dat.toString().slice(11,15) })
+    //    this.setState({time:dat.toString().slice(16,24)});
+
+       setDate( dat.toString().slice(8,10) + " " + dat.toString().slice(4,7) + " " + dat.toString().slice(11,15) );
+       setTime( dat.toString().slice(16,24) );
 
     //    this.setState({emailid:localStorage.email});
 
@@ -86,36 +108,36 @@ export default class Upload extends React.Component{
        
     }
     
-      handleSubmit = (event) => {
+      const handleSubmit = (event) => {
     
     
         event.preventDefault();
 
-        console.log("date isssssssssssssssss",this.state)
+        // console.log("date isssssssssssssssss",this.state)
 
-        var temp = this.state.array;
+        // var temp = this.state.array;
 
-        temp.push(this.state.file.name);
+        // temp.push(this.state.file.name);
 
-        this.setState({array:temp});
+        // this.setState({array:temp});
 
         console.log("Mail is ------- ",localStorage.email);
 
-        console.log("state ------- ",this.state);
+        // console.log("state ------- ",this.state);
 
 
 
         
          const formData =  new FormData();
-         formData.append("image",this.state.file)
-         formData.append("category",this.state.category)
-         formData.append("postname",this.state.postname)
-         formData.append("date",this.state.date)
-         formData.append("time",this.state.time)
+         formData.append("image",file)
+         formData.append("category",category)
+         formData.append("postname",postname)
+         formData.append("date",date)
+         formData.append("time",time)
          formData.append("email",localStorage.email)
          formData.append("username",localStorage.username)
-         formData.append("likes",this.state.likes)
-         formData.append("comments",this.state.comments)
+         formData.append("likes",likes)
+         formData.append("comments",comments)
 
 
 
@@ -136,18 +158,17 @@ export default class Upload extends React.Component{
 
          
     
-      };
+      }
 
-    render(){
         return(
         <div>
             <h1>Upload post:</h1>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={(event)=>handleSubmit(event)}>
                 POST NAME:<br/>
-                <input type="text" name="postname" onChange={this.handleChange} required/><br/><br/>
+                <input type="text" name="postname" onChange={(event)=>setPostname(event.target.value)} required/><br/><br/>
 
                 CATEGORY:<br/>
-                <select name="category" onChange={this.handleChange} required>
+                <select name="category" onChange={(event)=> setCategory(event.target.value)} required>
                     {/* <option value="CATS">CATS</option>
                     <option value="DOGS">DOGS</option>
                     <option value="BIRDS">BIRDS</option>
@@ -155,21 +176,21 @@ export default class Upload extends React.Component{
                     <option value="OTHERS">OTHERS</option> */}
 
                     {
-                        this.props.AllCategories.map((item)=>{
+                        props.AllCategories.map((item)=>{
                             return (<option value={item.category} >{item.category}</option>)
                         })
                     }
                 </select><br/><br/>
 
                 image:<br/>
-                <input type="file" name="file" onChange={this.handleChangeFile} required/><br/><br/>
+                <input type="file" name="file" onChange={(event)=>handleChangeFile(event)} required/><br/><br/>
 
                 <input type="submit" value="Post it"/>
             </form>
             
         </div>  
         )
-    }
+    
 }
 
 {/* <h1>hello</h1>

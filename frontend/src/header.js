@@ -1,30 +1,31 @@
 import React from 'react';
 
-export default class Header extends React.Component{
-    constructor(props){
-        super(props);
+export default function Header (props){
+    // constructor(props){
+    //     super(props);
 
-    }
+    // }
 
-    handleLogout=()=>{
+    const handleLogout=(event)=>{
+
+      event.preventDefault();
 
         if(localStorage.length != 0)
         {
             localStorage.clear();
     
-            this.props.history.push('/login');
+            props.history.push('/login');
         }
     }
 
-    render(){
         return(
             <div className="header">
           <div className="header_lft">
             <div className="logo"><a href="#"><img src="/images/logo.png" /></a></div>
            {(localStorage.length !=0) &&  <div className="navigatn">
               <ul>
-                <li><a href="#" className="active">Home</a></li>
-                <li><a href="#" onClick={this.handleLogout}> Log out </a></li>
+                <li><a href="#" className="active" onClick={() => props.history.push('/timeline')}>Home</a></li>
+                <li><a href="#" onClick={(event)=>handleLogout(event)}> Log out </a></li>
               </ul>
             </div>}
           </div>
@@ -39,5 +40,5 @@ export default class Header extends React.Component{
           </div> }
         </div>
         )
-    }
+    
 }

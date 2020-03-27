@@ -41,8 +41,11 @@ router.post('/getComments', (req, res) => {
 })
 
 router.post('/getlikes', (req, res) => {
+    console.log("data for likes __________________",req.body);
     try {
         api.Getlikes(req.body).then((data) => {
+
+            console.log("likes from apiiiiiiiiiiii areeeeeeeee",data);
 
             res.send({ temp: data[0].likes.length })
         })
